@@ -1,6 +1,6 @@
 'use client'
 import * as z from 'zod'
-import { LoginSchema, RegisterSchema } from '@/schema';
+import { LoginSchema } from '@/schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -17,21 +17,20 @@ import { Button } from '../ui/button';
 import { FormError } from './form/form-error';
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
-import { register } from '@/actions/register';
+import {  login } from '@/actions/login'
 import { useToast } from "@/components/ui/use-toast"
 
 
-export default function RegisterForm() {
+export default function LoginForm() {
     const [error, setError] = useState<string | undefined>("");
-    const [success, setSuccess] = useState<string | undefined>("")
     const [pending, startTransition] = useTransition()
     const router = useRouter()
     const { toast } = useToast()
 
-    const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
         setError("")
         startTransition(() => {
-            register(values).then((data) => {
+            login(values).then((data) => {
                 if (data?.error) {
                     console.log(data.error)
                     setError(data.error)
@@ -39,20 +38,18 @@ export default function RegisterForm() {
                 }
                 console.log(data)
                toast({
-                title: "User registered!"
+                title: "User logged in!"
                })
-               router.push('/sign-in')
+               router.push('/dashboard')
                 
 
             })
         })
     }
 
-    const form = useForm<z.infer<typeof RegisterSchema>>({
-        resolver: zodResolver(RegisterSchema),
+    const form = useForm<z.infer<typeof LoginSchema>>({
+        resolver: zodResolver(LoginSchema),
         defaultValues: {
-            firstName: "",
-            lastName: "",
             email: "",
             password: "",
         }
@@ -65,40 +62,6 @@ export default function RegisterForm() {
                 className="space-y-6"
             >
                 <div className="space-y-4">
-                    <div className="flex items-center gap-x-4">
-                        <FormField
-                            control={form.control}
-                            name="firstName"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>First name</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            type="text"
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="lastName"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Last name</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            type="text"
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
                     <FormField
                         control={form.control}
                         name="email"
@@ -125,6 +88,7 @@ export default function RegisterForm() {
                                     <Input
                                         {...field}
                                         type="password"
+                                        disabled={pending}
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -136,8 +100,9 @@ export default function RegisterForm() {
                 <Button
                     type="submit"
                     className="w-full"
+                    disabled={pending}
                 >
-                    Create account
+                    Sign In
                 </Button>
             </form>
         </Form>
