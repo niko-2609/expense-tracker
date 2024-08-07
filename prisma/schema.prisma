@@ -1,0 +1,85 @@
+datasource db {
+  provider = "mongodb" 
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  firstName     String?
+  lastName      String?
+  password      String?
+  email         String?         @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  incomes   Income[]
+  expenses  Expense[]
+  budgets   Budget[]
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@unique([provider, providerAccountId])
+}
+
+model Income {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String   @db.ObjectId
+  source     String
+  type       String
+  creditedOn DateTime
+  amount     Float
+
+  user       User     @relation(fields: [userId], references: [id])
+}
+
+model Expense {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String   @db.ObjectId
+  expenseName     String
+  budgetId        String?  @db.ObjectId
+  category        String
+  transactionDate DateTime
+  amount          Float
+
+  user            User     @relation(fields: [userId], references: [id])
+  budget          Budget?  @relation(fields: [budgetId], references: [id])
+}
+
+model Budget {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String   @db.ObjectId
+  budgetName     String
+  createdOn      DateTime @default(now())
+  amountAllocated Float
+  amountSpent    Float
+
+  user           User     @relation(fields: [userId], references: [id])
+  expenses       Expense[]
+}

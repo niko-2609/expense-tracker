@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import Navbar from "@/components/shared/Navbar";
+import { Toaster } from "@/components/ui/toaster"
 
 
 const IBMPlex = IBM_Plex_Sans({
@@ -26,6 +26,7 @@ export default function RootLayout({
       <body className={cn("font-IBMPlex antialiased", IBMPlex.variable)}>
           {/* <Navbar /> */}
           {children}
+          <Toaster />
       </body>
     </html>
   );
