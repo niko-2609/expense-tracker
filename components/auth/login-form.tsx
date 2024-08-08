@@ -19,30 +19,24 @@ import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import {  login } from '@/actions/login'
 import { useToast } from "@/components/ui/use-toast"
+import { signInUserAction } from '@/store/actions/user';
+import { useDispatch } from 'react-redux';
 
 
 export default function LoginForm() {
+    const dispatch = useDispatch()
     const [error, setError] = useState<string | undefined>("");
     const [pending, startTransition] = useTransition()
     const router = useRouter()
     const { toast } = useToast()
 
-    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
         setError("")
         startTransition(() => {
-            login(values).then((data) => {
-                if (data?.error) {
-                    console.log(data.error)
-                    setError(data.error)
-                    return
-                }
-                console.log(data)
-               toast({
-                title: "User logged in!"
-               })
-               router.push('/dashboard')
-                
-
+            dispatch<any>(signInUserAction(values)).then(()=>{
+                toast({
+                    title: "User logged in!"
+                   })
             })
         })
     }
