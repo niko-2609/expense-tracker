@@ -3,6 +3,15 @@ import { IBM_Plex_Sans, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster"
+import Navbar from "@/components/shared/Navbar";
+import { SessionProvider } from "next-auth/react"
+import type { AppProps } from "next/app"
+import { Provider } from "react-redux";
+import { persistor, store } from "@/store/store";
+import ReduxProvider from "./StoreProvider";
+// import { PersistGate } from "redux-persist/integration/react";
+
+
 
 
 const IBMPlex = IBM_Plex_Sans({
@@ -21,12 +30,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body className={cn("font-IBMPlex antialiased", IBMPlex.variable)}>
-          {/* <Navbar /> */}
-          {children}
-          <Toaster />
+        <ReduxProvider>
+          <div className="flex min-h-screen w-full flex-col">
+            {children}
+            <Toaster />
+          </div>
+        </ReduxProvider>
       </body>
     </html>
   );
