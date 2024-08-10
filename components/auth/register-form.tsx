@@ -42,8 +42,6 @@ export default function RegisterForm() {
                 title: "User registered!"
                })
                router.push('/sign-in')
-                
-
             })
         })
     }

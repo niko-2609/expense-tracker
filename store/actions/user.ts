@@ -22,24 +22,24 @@ export const signInUserAction = createAsyncThunk<void, any, { dispatch: Dispatch
     async (values, { dispatch }) => {
         dispatch(signInStart());
 
-        console.log("******DATA******");
+        console.log("Login redux action called here");
         try {
-            login(values).then((data) => {
-                if (data?.error) {
-                    dispatch(signInFailure(data?.error))
-                    throw new Error(data?.error);
+            const data = await login(values)
+            if (data?.success) {
+                const session = await getSession();
+                if (!session || Object.keys(session).length == 0) {
+                    dispatch(signInFailure("Cannot fetch user details"));
+                    return 
                 }
-                const session = getSession();
-                console.log("*****SUCCESS******", session)
                 dispatch(signInSuccess(session));
-                if (!session) {
-                    dispatch(signInFailure("Cannot fetch user details"))
-                    throw new Error("Cannot fetch user details");
-                }
-            })
+                return
+            }
 
+            dispatch(signInFailure(data?.error))
+            return
         } catch (error: any) {
-            dispatch(signInFailure(error.message || "An unknown error occurred"));
+            dispatch(signInFailure(error || "An unknown error occurred"));
+            return 
         }
     }
 );

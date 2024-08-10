@@ -4,7 +4,7 @@ import { Button } from '../ui/button'
 import Link from 'next/link'
 import { logout } from '@/actions/logout'
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
+import { RootState } from '@/store/rootReducer';
 import { signOutUserAction } from '@/store/actions/user'
 import { toast } from '../ui/use-toast'
 
@@ -17,7 +17,7 @@ function Info() {
     const userSignout = async () => {
         dispatch<any>(signOutUserAction()).then(()=>{
             toast({
-                title: "User logged out"
+                title: "Logged out!"
                })
         })
     }
