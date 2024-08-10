@@ -27,6 +27,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   callbacks: {
     async session({ session, user, token}) {
+      console.log("Session Callback called here")
       // Adding user id(sub) from token in session
       if (token.sub && session.user) {
            session.user.id = token.sub
@@ -34,6 +35,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session
     },
     async jwt({token}) {
+
+      console.log("JWT Callback called here")
       // check if the user id exists in token, if no, return the token
       if (!token.sub) return token;
 

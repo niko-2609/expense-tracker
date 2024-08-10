@@ -9,6 +9,7 @@ import type { AppProps } from "next/app"
 import { Provider } from "react-redux";
 import { persistor, store } from "@/store/store";
 import ReduxProvider from "./StoreProvider";
+import Sidebar from "@/components/shared/Sidebar";
 // import { PersistGate } from "redux-persist/integration/react";
 
 
@@ -35,10 +36,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn("font-IBMPlex antialiased", IBMPlex.variable)}>
         <ReduxProvider>
-          <div className="flex min-h-screen w-full flex-col">
+          {/* <Navbar /> */}
             {children}
             <Toaster />
-          </div>
         </ReduxProvider>
       </body>
     </html>

@@ -27,6 +27,8 @@ export default {
     Credentials({
     async authorize(credentials) {
 
+
+      console.log("CREDENTIALS AUTHORIZED IS CALLED")
       // Check the schema of the user input 
       const validatedFields = LoginSchema.safeParse(credentials)
 
@@ -43,12 +45,19 @@ export default {
           password,
           user.password
         )
+        console.log("PASSWORDS MATCH", passwordsMatch)
+
+        console.log("CREDENTIALS AUTHORIZE RETURNING NULL")
+        if (!passwordsMatch) return null
 
 
+        console.log("CREDENTIALS AUTHORIZE RETURNING WITH VALID USER")
         // is passwords are matched, return user
         if (passwordsMatch) return user;
-
       }
+
+
+      console.log("CREDENTIALS AUTHORIZE RETURNING FOR DEFAULT CASE")
       // Break by default
       return null
     }

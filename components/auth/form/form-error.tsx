@@ -3,7 +3,7 @@
 import { TriangleAlert} from "lucide-react"
 
 interface FormErrorProps {
-    message?: string
+    message?: string | null
 }
 
 
