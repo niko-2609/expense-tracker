@@ -47,12 +47,24 @@ import {
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import Header from '@/components/shared/Header'
+import CardWrapper from '@/components/dashboard/CardWrapper'
 
 const Dashboard = () => {
   return (
     <>
-      <div className="flex items-center">
-        <h1 className="text-lg font-semibold md:text-2xl">Dashboard</h1>
+      <div className="flex justifiy-center flex-col gap-2 md:gap-4">
+        <h1 className="text-lg font-semibold font-sans md:text-2xl">Hi Nikolai 👋</h1>
+        <p className="font-sans md:text-lg">Heres how your finance health looks like</p>
+      </div>
+      <div className='flex gap-4 flex-col lg:flex-row w-full 2xl:justify-between my-4'>
+         <div className='flex gap-2 justify-around sm:justify-around lg:justify-normal'>
+         <CardWrapper />
+         <CardWrapper />
+         </div>
+          <div className='flex gap-2 justify-around sm:justify-around lg:justify-normal'>
+          <CardWrapper />
+          <CardWrapper />
+          </div>
       </div>
     </>
   )
