@@ -68,11 +68,11 @@ const Dashboard = () => {
           <StatCardWrapper  />
           </div>
       </div>
-      <div className='flex justify-between 2xl:justify-normal 2xl:gap-20 2xl:mt-20'>
-      <div className="flex flex-col w-[700px] 2xl:w-[1000px] 2xl:mr-10">
+      <div className='flex flex-col gap-4 lg:justify-between 2xl:justify-normal 2xl:gap-20 2xl:mt-20 lg:flex-row lg:gap-0'>
+      <div className="flex flex-col lg:w-[700px] 2xl:w-[1000px] 2xl:mr-10">
         <BarChartComponent />
       </div>
-      <div className='flex w-[400px]'>
+      <div className='flex w-full lg:w-[400px]'>
         <PieChartComponent />
       </div>
       </div>
