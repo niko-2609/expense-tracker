@@ -9,7 +9,15 @@ import {
 import { Button } from "../ui/button"
 import Image from "next/image"
 
-function CardWrapper() {
+interface CardWrapperProps {
+    title: string,
+    changePercent: number,
+    icon: string,
+
+
+}
+
+function StatCardWrapper() {
     return (
         <div className="flex rounded-lg max-w-fit sm:p-2 shadow-lg lg:gap-8 2xl:gap-20 bg-gray-100 gap-2">
            <div className="flex flex-1">
@@ -26,4 +34,4 @@ function CardWrapper() {
     )
 }
 
-export default CardWrapper
+export default StatCardWrapper
