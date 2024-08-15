@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -9,18 +9,21 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Fn } from '@prisma/client/runtime/library'
+import { DropDownMenu } from './Dropdown'
+import ExpenseForm from './ExpenseForm'
 
-function AddDialog() {
+function AddExpense(props:any) {
+  const [ category, setCategory] = useState()
+  const [ open, setOpen ] = useState<boolean | undefined>(undefined)
   return (
-    <Dialog>
+    <Dialog open={open}>
     <DialogTrigger asChild>
-      <Button onClick={() => {
-        // TODO Call a server action to add expense to expense table in db
-      }}>
+      <Button onClick={() => setOpen(true)}>
         + Add
       </Button>
     </DialogTrigger>
@@ -31,34 +34,12 @@ function AddDialog() {
           Make changes to your profile here. Click save when youre done.
         </DialogDescription>
       </DialogHeader>
-      <div className="grid gap-4 py-4">
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="name" className="text-right">
-            Name
-          </Label>
-          <Input
-            id="name"
-            defaultValue="Pedro Duarte"
-            className="col-span-3"
-          />
-        </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="username" className="text-right">
-            Username
-          </Label>
-          <Input
-            id="username"
-            defaultValue="@peduarte"
-            className="col-span-3"
-          />
-        </div>
-      </div>
-      <DialogFooter>
-        <Button type="submit">Save changes</Button>
-      </DialogFooter>
+      <ExpenseForm handleClose={() => setOpen(false)}/>
     </DialogContent>
   </Dialog>
   )
 }
 
-export default AddDialog
+export default AddExpense
+
+

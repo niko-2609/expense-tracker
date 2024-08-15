@@ -64,12 +64,13 @@ model Expense {
   userId          String   @db.ObjectId
   expenseName     String
   budgetId        String?  @db.ObjectId
-  category        String
+  categoryId        String   @db.ObjectId
   transactionDate DateTime
   amount          Float
 
   user            User     @relation(fields: [userId], references: [id])
   budget          Budget?  @relation(fields: [budgetId], references: [id])
+  category        Category @relation(fields: [categoryId], references: [id])
 }
 
 model Budget {
@@ -82,4 +83,11 @@ model Budget {
 
   user           User     @relation(fields: [userId], references: [id])
   expenses       Expense[]
+}
+
+
+model Category {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  categoryName String
+  expenses Expense[] 
 }
