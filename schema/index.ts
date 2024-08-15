@@ -23,3 +23,15 @@ export const LoginSchema = z.object({
         message: "Password is required"
     })
 })
+
+export const ExpenseSchema = z.object({
+    expenseName: z.string().min(1, {
+        message: "Expense name is required"
+    }),
+    category: z.string().min(1, {
+        message: "Category is required"
+    }),
+    amount: z.string().min(1, {
+        message: "Amount is required"
+    })
+})

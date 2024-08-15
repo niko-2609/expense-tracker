@@ -47,10 +47,12 @@ export default {
         )
         console.log("PASSWORDS MATCH", passwordsMatch)
 
-        console.log("CREDENTIALS AUTHORIZE RETURNING NULL")
-        if (!passwordsMatch) return null
+        
+        if (!passwordsMatch) {
+          console.log("CREDENTIALS AUTHORIZE RETURNING NULL")
+          return null
 
-
+        }
         console.log("CREDENTIALS AUTHORIZE RETURNING WITH VALID USER")
         // is passwords are matched, return user
         if (passwordsMatch) return user;

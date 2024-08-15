@@ -54,9 +54,9 @@ import { PieChartComponent } from '@/components/dashboard/PieChart'
 const Dashboard = () => {
   return (
     <>
-      <div className="flex justifiy-center flex-col gap-2 md:gap-4">
+      <div className="flex justifiy-center flex-col gap-2 md:gap-2">
         <h1 className="text-lg font-semibold font-sans md:text-2xl">Hi Nikolai 👋</h1>
-        <p className="font-sans md:text-lg">Heres how your finance health looks like</p>
+        <p className="font-sans md:text-md text-gray-600">Heres how your finance health looks like</p>
       </div>
       <div className='flex gap-4 flex-col lg:flex-row w-full my-4 2xl:gap-20'>
          <div className='flex gap-2 justify-around sm:justify-around lg:justify-normal 2xl:gap-20'>

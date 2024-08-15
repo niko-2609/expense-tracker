@@ -1,57 +1,85 @@
-'use client'
-import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
-// Theme
-import { ColDef, ModuleRegistry } from '@ag-grid-community/core';
-import { AgGridReact } from '@ag-grid-community/react';
-// React Grid Logic
-import '@ag-grid-community/styles/ag-grid.css';
-// Core CSS
-import '@ag-grid-community/styles/ag-theme-quartz.css';
-import '@ag-grid-community/styles/ag-theme-quartz.min.css';
-import '@ag-grid-community/styles/ag-theme-balham.min.css';
-import '@ag-grid-community/styles/ag-theme-material.min.css';
-import React, { StrictMode, useState } from 'react';
+"use client"
 
-ModuleRegistry.registerModules([ClientSideRowModelModule]);
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table"
 
-// Row Data Interface
-interface IRow {
-    make: string;
-    model: string;
-    price: number;
-    electric: boolean;
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { formatCurrency, formatDate } from "@/utils/expenses"
+import { getCategoryNameById } from "@/actions/categories"
+import { useEffect, useState } from "react"
+
+interface DataTableProps<TData, TValue> {
+  columns: ColumnDef<TData, TValue>[]
+  data: TData[]
 }
 
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+}: DataTableProps<TData, TValue>) {
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  })
 
-export function TableList({rowData}:{rowData: any[]}) {
-  
-  // Column Definitions: Defines the columns to be displayed.
-  const [colDefs, setColDefs] = useState([
-    { field: "id" },
-    { field: "name" },
-    { field: "category" },
-    {field: "date"},
-    { field: "amount" },
- 
-  ]);
- 
-  const defaultColDef: ColDef = {
-    flex: 1,
-};
 
-// Container: Defines the grid's theme & dimensions.
-return (
-    <div
-        className="ag-theme-material-dark w-full max-h-full rounded-xl py-2 px-4"
-    >
-        <AgGridReact 
-            rowData={rowData} 
-            columnDefs={colDefs} 
-            defaultColDef={defaultColDef}
-            suppressMovableColumns={true}
-            
-        />
+
+  return (
+    <div className="rounded-md border w-full">
+      <Table>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => {
+                return (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                )
+              })}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && "selected"}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                No results.
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
     </div>
-);
-};
-
+  )
+}
