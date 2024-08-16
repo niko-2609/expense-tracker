@@ -31,12 +31,6 @@ function ExpensePage() {
     getData();
   }
 
-
-  // useEffect(() => {
-  //   // cleanup on unmount, remove expense data stored in state
-    
-  // },[])
-
   return (
     <main className="flex flex-col flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0">
       <div className='flex justify-between items-center px-1 w-full'>
