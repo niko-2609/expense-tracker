@@ -4,6 +4,7 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table"
 
@@ -18,6 +19,8 @@ import {
 import { formatCurrency, formatDate } from "@/utils/expenses"
 import { getCategoryNameById } from "@/actions/categories"
 import { useEffect, useState } from "react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import { Button } from "../ui/button"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -32,11 +35,14 @@ export function DataTable<TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel()
+
   })
 
 
 
   return (
+    <>
     <div className="rounded-md border w-full">
       <Table>
         <TableHeader>
@@ -81,5 +87,24 @@ export function DataTable<TData, TValue>({
         </TableBody>
       </Table>
     </div>
+    <div className="w-full flex justify-between items-center">
+      <Button 
+        className="flex"
+        disabled={!table.getCanPreviousPage()}
+        onClick={() => table.previousPage()}
+        >
+        <ChevronLeft />
+        Prev
+      </Button>
+      <Button 
+      className="flex"
+      disabled={!table.getCanNextPage()}
+      onClick={() => table.nextPage()}
+      >
+        Next
+        <ChevronRight />
+      </Button>
+    </div>
+    </>
   )
 }

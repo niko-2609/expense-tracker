@@ -10,10 +10,28 @@ import * as z from 'zod'
 import { getCategoryNameById } from './categories';
 
 
-export const getExpenses = async (): Promise<any[]> => {
-    const data = await db.expense.findMany()   
-    return data
-}
+export const getExpensesByUser = async (id: string): Promise<any[]> => {
+    try {
+      const data = await db.expense.findMany({
+        where: {userId : id}
+      });
+      const updatedExpenseData = await Promise.all(
+        data.map(async (item: any) => {
+          const categoryName = await getCategoryNameById(item.categoryId);
+          return {
+            ...item,
+            transactionDate: formatDate(item.transactionDate),
+            amount: formatCurrency(item.amount),
+            categoryId: categoryName
+          };
+        })
+      );
+      return updatedExpenseData
+    } catch (error) {
+      console.error("Failed to fetch expenses:", error);
+      throw new Error("Could not retrieve expenses");
+    }
+  };
 
 
 export const addExpense = async (values: z.infer<typeof ExpenseSchema>, userId: any): Promise<any> => {
@@ -62,3 +80,14 @@ export const addExpense = async (values: z.infer<typeof ExpenseSchema>, userId: 
 }
 
 
+export const getExpensesTotalRows = async(id: string) => {
+    try{
+        const totalRows = await db.expense.count()
+        if (!totalRows) {
+            return { error: "Cannot fetch data for pagination"}
+        }
+        return totalRows
+    } catch(error:any) {
+        return {error: "Something went wrong, Please try again "}
+    }
+}

@@ -28,7 +28,7 @@ function StatCardWrapper() {
             </div>
            </div>
             <div className="flex mt-0">
-                <Image src="./budgets.svg" alt="" width={52} height={52} />
+                <Image src="./budgets.svg" alt="expense budgets not found" width={52} height={52} />
             </div>
         </div>
     )

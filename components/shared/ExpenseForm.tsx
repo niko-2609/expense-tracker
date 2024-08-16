@@ -15,7 +15,7 @@ import {
 import { FormError } from '../auth/form/form-error';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { addExpense, getExpenses } from '@/actions/expenses';
+import { addExpense } from '@/actions/expenses';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/rootReducer';
 import {
@@ -26,10 +26,11 @@ import {
     DropdownMenuRadioItem,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu"
 import { getCategories } from '@/actions/categories';
+import { toast } from '../ui/use-toast'
 
-function ExpenseForm({ handleClose }: any) {
+function ExpenseForm({ handleClose, fetchData }: any) {
     const [position, setPosition] = React.useState("bottom")
     const user = useSelector((state: RootState) => state.user.user)
     const [pending, startTransition] = useTransition()
@@ -41,10 +42,10 @@ function ExpenseForm({ handleClose }: any) {
             amount: "",
         }
     })
-    
+
     const [selectedCat, setSelectedCat] = React.useState<any>({})
-    const [ categories, setCategories ] = React.useState<any>([])
-    const fetchCategories = async() => {
+    const [categories, setCategories] = React.useState<any>([])
+    const fetchCategories = async () => {
         const categoryList = await getCategories()
         setCategories(categoryList)
     }
@@ -56,7 +57,7 @@ function ExpenseForm({ handleClose }: any) {
         }
     }, [])
 
-      
+
     const onSubmit = async (values: z.infer<typeof ExpenseSchema>) => {
         console.log(values)
         startTransition(() => {
@@ -65,6 +66,12 @@ function ExpenseForm({ handleClose }: any) {
                     if (data.error) {
                         return
                     }
+                    fetchData().then(() => {
+                        toast({
+                            title: "Expense Added",
+                            duration: 3000,
+                        })
+                    })
                 })
                 handleClose()
             } catch (error: any) {
@@ -108,25 +115,25 @@ function ExpenseForm({ handleClose }: any) {
                                 <FormControl>
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild className="w-fit">
-                                            <Button variant="outline">{selectedCat && Object.keys(selectedCat).length !== 0 ? selectedCat.categoryName: "Select a category"}</Button>
+                                            <Button variant="outline">{selectedCat && Object.keys(selectedCat).length !== 0 ? selectedCat.categoryName : "Select a category"}</Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent className="w-56">
                                             <DropdownMenuLabel>Category</DropdownMenuLabel>
                                             <DropdownMenuSeparator />
-                                            <DropdownMenuRadioGroup value={position} onValueChange={(value:any) => {
-                                            
+                                            <DropdownMenuRadioGroup value={position} onValueChange={(value: any) => {
+
                                                 setSelectedCat(value)
                                                 field.onChange(value.id)
                                                 console.log(field)
                                             }}>
                                                 {/** TODO: Fetch data from category table, and display categories */}
 
-                                                 {/** onValueChange={(id) => {
+                                                {/** onValueChange={(id) => {
                                                 const selected = categories.find((item: any) => item.id === id);
                                                 setSelectedCategory({ id, categoryName: selected?.categoryName || "Select a category" });
                                                 field.onChange(id); // Update form state with category id
                                             }} */}
-                                                {categories.map((item:any) => {
+                                                {categories.map((item: any) => {
                                                     return <DropdownMenuRadioItem key={item.id} value={item}>{item.categoryName}</DropdownMenuRadioItem>
                                                 })}
                                                 {/* <DropdownMenuRadioItem value="lifestyle">Lifestyle</DropdownMenuRadioItem>
@@ -163,7 +170,7 @@ function ExpenseForm({ handleClose }: any) {
                 </div>
                 <div className='flex justify-between w-full'>
                     <Button
-                        onClick={(event:any) => {
+                        onClick={(event: any) => {
                             event.preventDefault()
                             handleClose()
                         }}
