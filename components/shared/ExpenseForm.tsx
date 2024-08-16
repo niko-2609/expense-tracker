@@ -126,21 +126,9 @@ function ExpenseForm({ handleClose, fetchData }: any) {
                                                 field.onChange(value.id)
                                                 console.log(field)
                                             }}>
-                                                {/** TODO: Fetch data from category table, and display categories */}
-
-                                                {/** onValueChange={(id) => {
-                                                const selected = categories.find((item: any) => item.id === id);
-                                                setSelectedCategory({ id, categoryName: selected?.categoryName || "Select a category" });
-                                                field.onChange(id); // Update form state with category id
-                                            }} */}
                                                 {categories.map((item: any) => {
                                                     return <DropdownMenuRadioItem key={item.id} value={item}>{item.categoryName}</DropdownMenuRadioItem>
                                                 })}
-                                                {/* <DropdownMenuRadioItem value="lifestyle">Lifestyle</DropdownMenuRadioItem>
-                                                <DropdownMenuRadioItem value="entertainment">Entertainment</DropdownMenuRadioItem>
-                                                <DropdownMenuRadioItem value="fnb">Food & Beverages</DropdownMenuRadioItem>
-                                                <DropdownMenuRadioItem value="education">Education</DropdownMenuRadioItem>
-                                                <DropdownMenuRadioItem value="health">Health</DropdownMenuRadioItem> */}
                                             </DropdownMenuRadioGroup>
                                         </DropdownMenuContent>
                                     </DropdownMenu>
