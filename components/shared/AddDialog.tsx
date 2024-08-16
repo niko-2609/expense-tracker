@@ -34,10 +34,10 @@ function AddExpense(props:any) {
           Make changes to your profile here. Click save when youre done.
         </DialogDescription>
       </DialogHeader>
-      <ExpenseForm handleClose={() => setOpen(false)}/>
+      <ExpenseForm handleClose={() => setOpen(false)} fetchData={() => props?.fetchData()}/>
     </DialogContent>
   </Dialog>
-  )
+  ) 
 }
 
 export default AddExpense
