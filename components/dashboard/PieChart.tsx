@@ -41,15 +41,15 @@ export function PieChartComponent() {
   }, [])
 
   return (
-    <Card className="flex flex-col w-full">
-      <CardHeader className="items-center pb-0">
+    <Card className="flex flex-col w-full xl:w-[380px]">
+      <CardHeader className="items-center pb-0 my-0">
         <CardTitle>Pie Chart - Donut with Text</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
+      <CardContent className="flex-1 pb-0 my-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="mx-auto aspect-square max-h-[200px]"
         >
           <PieChart>
             <ChartTooltip
@@ -60,8 +60,8 @@ export function PieChartComponent() {
               data={chartData}
               dataKey="visitors"
               nameKey="browser"
-              innerRadius={60}
-              strokeWidth={5}
+              innerRadius={40}
+              strokeWidth={10}
             >
               <Label
                 content={({ viewBox }) => {
@@ -97,7 +97,7 @@ export function PieChartComponent() {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 font-medium leading-none">
+        <div className="flex items-center gap-1 font-medium leading-none">
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
