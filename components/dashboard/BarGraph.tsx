@@ -59,7 +59,7 @@ export function BarChartComponent() {
         <CardDescription>January - Dec 2024</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className={pathname === "/dashboard/bar" ? 'h-[400px] w-full 2xl:h-[800px]' : 'w-full h-[200px] 2xl:h-[400px]'}>
+        <ChartContainer config={chartConfig} className={pathname === "/dashboard/bar" ? 'h-[350px] w-full 2xl:h-[800px]' : 'w-full h-[180px] 2xl:h-[400px] xl:h-[150px]'}>
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
@@ -79,7 +79,7 @@ export function BarChartComponent() {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
+        <div className="flex gap-1 font-medium leading-none">
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
