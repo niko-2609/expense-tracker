@@ -36,16 +36,15 @@ export const getExpensesByUser = async (id: string): Promise<any[]> => {
 
 export const addExpense = async (values: z.infer<typeof ExpenseSchema>, userId: any): Promise<any> => {
     // check for user inputs using zod validation, the interface must move to Zod schemas
-
     const validatedFields = ExpenseSchema.safeParse(values)
     if (!validatedFields.success) {
-        return { error: "Unexpected data received, please try again" }
+        return { error: "Please enter valid data" }
     }
 
     const { expenseName, category, amount } = validatedFields.data;
     
     if (!userId) {
-        return { error: "User ID is required" };
+        return { error: "Invalid user" };
     }
 
 
@@ -77,17 +76,4 @@ export const addExpense = async (values: z.infer<typeof ExpenseSchema>, userId: 
     // })
 
     return { success: "Expense added successfully" }
-}
-
-
-export const getExpensesTotalRows = async(id: string) => {
-    try{
-        const totalRows = await db.expense.count()
-        if (!totalRows) {
-            return { error: "Cannot fetch data for pagination"}
-        }
-        return totalRows
-    } catch(error:any) {
-        return {error: "Something went wrong, Please try again "}
-    }
 }

@@ -59,7 +59,7 @@ export function BarChartComponent() {
         <CardDescription>January - Dec 2024</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className={pathname === "/dashboard/bar" ? 'h-[350px] w-full 2xl:h-[800px]' : 'w-full h-[180px] 2xl:h-[400px] xl:h-[150px]'}>
+        <ChartContainer config={chartConfig} className={pathname === "/dashboard/bar" ? 'h-[350px] w-full 2xl:h-[800px]' : 'w-full h-[170px] 2xl:h-[600px] xl:h-[190px]'}>
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis

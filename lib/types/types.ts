@@ -21,3 +21,19 @@ export interface Category {
   categoryName: string
 }
 
+export interface Income {
+  userId: string
+  source: string
+  type: string
+  creditedOn: Date
+  amount: number
+}
+
+
+export interface Budget {
+  userId: string
+  source: string
+  type: string
+  creditedOn: Date
+  amount: number
+}
