@@ -35,3 +35,26 @@ export const ExpenseSchema = z.object({
         message: "Amount is required"
     })
 })
+
+export const IncomeSchema = z.object({
+    source: z.string().min(1, {
+        message: "Source is required"
+    }),
+    type: z.string().min(1, {
+        message: "Type is required"
+    }),
+    amount: z.string().min(1, {
+        message: "Amount is required"
+    }),
+
+})
+
+export const BudgetSchema = z.object({
+    budgetName: z.string().min(1, {
+        message: "Please give budget a name"
+    }),
+    description: z.string().optional(),
+    amount: z.string().min(1, {
+        message: "Please specify amount for budget"
+    })
+})

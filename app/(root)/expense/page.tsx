@@ -1,13 +1,10 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import AddExpense from '@/components/shared/AddDialog'
+import AddExpenseDialog from '@/components/shared/AddExpenseDialog'
 import { DataTable } from '@/components/shared/Table'
-import { getExpensesByUser, getExpensesTotalRows } from '@/actions/expenses'
-import { columns } from '@/lib/types/table/colDef'
-import { formatCurrency, formatDate } from '@/utils/expenses'
-import { getCategoryNameById } from '@/actions/categories'
-import { auth } from '@/auth'
+import { getExpensesByUser } from '@/actions/expenses'
+import { expenseColumns } from '@/lib/types/table/colDef'
 import { RootState } from '@/store/rootReducer'
 import { useSelector } from 'react-redux'
 
@@ -35,9 +32,9 @@ function ExpensePage() {
     <main className="flex flex-col flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0">
       <div className='flex justify-between items-center px-1 w-full'>
         <p className='text-2xl'>Expenses</p>
-        <AddExpense fetchData={() => getData()}/>
+        <AddExpenseDialog fetchData={() => getData()}/>
       </div>
-      {!loading && <DataTable columns={columns} data={expenses} />}
+      {!loading && <DataTable columns={expenseColumns} data={expenses} />}
       {loading && <p>Loading...</p>}
     </main>
   );

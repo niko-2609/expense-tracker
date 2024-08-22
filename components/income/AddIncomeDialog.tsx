@@ -5,41 +5,34 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Fn } from '@prisma/client/runtime/library'
-import { DropDownMenu } from './Dropdown'
-import ExpenseForm from './ExpenseForm'
+import IncomeForm from '@/components/income/AddIncomeForm'
 
-function AddExpense(props:any) {
-  const [ category, setCategory] = useState()
+function AddIncomeDialog(props:any) {
   const [ open, setOpen ] = useState<boolean | undefined>(undefined)
   return (
     <Dialog open={open}>
     <DialogTrigger asChild>
       <Button onClick={() => setOpen(true)}>
-        + Add
+        + Add Income
       </Button>
     </DialogTrigger>
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
-        <DialogTitle>Edit profile</DialogTitle>
+        <DialogTitle>Add Income</DialogTitle>
         <DialogDescription>
-          Make changes to your profile here. Click save when youre done.
+          Add data about your income
         </DialogDescription>
       </DialogHeader>
-      <ExpenseForm handleClose={() => setOpen(false)} fetchData={() => props?.fetchData()}/>
+      <IncomeForm handleClose={() => setOpen(false)} fetchIncome={() => props?.fetchData()}/>
     </DialogContent>
   </Dialog>
   ) 
 }
 
-export default AddExpense
+export default AddIncomeDialog
 
 
