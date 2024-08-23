@@ -137,7 +137,7 @@ function IncomeForm({ handleClose, fetchIncome }: any) {
                         className=""
                         disabled={pending}
                     >
-                        Add Income
+                        Add
                     </Button>
                 </div>
             </form>

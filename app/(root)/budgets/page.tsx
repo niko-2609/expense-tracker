@@ -4,6 +4,7 @@ import AddBudgetDialog from '@/components/budget/AddBudgetDialog';
 import BudgetItem from '@/components/budget/BudgetItem';
 import { Button } from '@/components/ui/button'
 import { RootState } from '@/store/rootReducer';
+import { getSpentPerc } from '@/utils/budgets';
 import React from 'react'
 import { useSelector } from 'react-redux';
 
@@ -37,8 +38,9 @@ function BudgetsPage() {
       </div>
       <div className='flex flex-wrap gap-8 my-4 items-center justify-center lg:justify-normal'>
         {budget.map((item:any) => {
+          const spentPerc = getSpentPerc(item)
           return (
-            <BudgetItem key={item?.id} item={item}/>
+            <BudgetItem key={item?.id} item={item} spentPerc={spentPerc} fetchData={getData}/>
           )
         })}
       </div>

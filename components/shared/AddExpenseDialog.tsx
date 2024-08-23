@@ -10,15 +10,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import ExpenseForm from './ExpenseForm'
+import { usePathname } from 'next/navigation'
 
 function AddExpenseDialog(props:any) {
-  const [ category, setCategory] = useState()
   const [ open, setOpen ] = useState<boolean | undefined>(undefined)
+  const pathname = usePathname()
+   
   return (
     <Dialog open={open}>
     <DialogTrigger asChild>
       <Button onClick={() => setOpen(true)}>
-        + Add
+        {pathname === "/budgets" ? "Add" : "+ Add"}
       </Button>
     </DialogTrigger>
     <DialogContent className="sm:max-w-[425px]">
@@ -28,7 +30,7 @@ function AddExpenseDialog(props:any) {
           Add your expense data here
         </DialogDescription>
       </DialogHeader>
-      <ExpenseForm handleClose={() => setOpen(false)} fetchData={() => props?.fetchData()}/>
+      <ExpenseForm handleClose={() => setOpen(false)} fetchData={() => props?.fetchData()} budgetId={props?.budgetId ? props?.budgetId : null}/>
     </DialogContent>
   </Dialog>
   ) 
