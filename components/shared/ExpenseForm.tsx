@@ -30,8 +30,8 @@ import {
 import { getCategories } from '@/actions/categories';
 import { toast } from '../ui/use-toast'
 
-function ExpenseForm({ handleClose, fetchData }: any) {
-    const [position, setPosition] = React.useState("bottom")
+function ExpenseForm(props: any) {
+    const [position, setPosition] = React.useState("lifestyle")
     const user = useSelector((state: RootState) => state.user.user)
     const [pending, startTransition] = useTransition()
     const form = useForm<z.infer<typeof ExpenseSchema>>({
@@ -62,18 +62,19 @@ function ExpenseForm({ handleClose, fetchData }: any) {
         console.log(values)
         startTransition(() => {
             try {
-                addExpense(values, user?.user?.id).then((data) => {
+                const budgetIdToPass = props?.budgetId ? props?.budgetId : null
+                addExpense(values, user?.user?.id, budgetIdToPass).then((data) => {
                     if (data.error) {
                         return
                     }
-                    fetchData().then(() => {
-                        toast({
-                            title: "Expense Added",
-                            duration: 3000,
+                        props?.fetchData().then(() => {
+                            toast({
+                                title: props?.toastMessage,
+                                duration: 3000,
+                            })
                         })
-                    })
                 })
-                handleClose()
+                props?.handleClose()
             } catch (error: any) {
                 throw new Error(error)
             }
@@ -160,7 +161,7 @@ function ExpenseForm({ handleClose, fetchData }: any) {
                     <Button
                         onClick={(event: any) => {
                             event.preventDefault()
-                            handleClose()
+                            props?.handleClose()
                         }}
                         className=""
                         disabled={pending}

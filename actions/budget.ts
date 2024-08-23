@@ -51,10 +51,43 @@ export const addBudget = async(values: z.infer<typeof BudgetSchema>, userId: str
         const newBudget = await db.budget.create({
             data: budget
         })
-        console.log(newBudget)
         return { success: "Budget added successfully" }
     } catch (error: any){
       console.log(error)
         return {error: "Unexpected error, please try again"}
     }
+}
+
+
+
+export const updateAmountSpent = async (budgetId:string | null, amount: number) => {
+ if (budgetId) {
+  try {
+    const budget = await db.budget.findUnique({
+      where: {
+          id: new ObjectId(budgetId).toString(),
+      },
+      select: {
+          amountSpent: true,
+      },
+  });
+
+  if (budget) {
+      const newAmountSpent = budget?.amountSpent + amount;
+
+      // Update the amountSpent field
+      await db.budget.update({
+          where: {
+              id: new ObjectId(budgetId).toString(),
+          },
+          data: {
+              amountSpent: newAmountSpent,
+          },
+      });
+  }
+  } catch (error:any) {
+    console.log(error)
+    return {error: "Cannot update budget"}
+  }
+ }
 }

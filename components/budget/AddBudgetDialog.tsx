@@ -17,7 +17,7 @@ function AddBudgetDialog(props:any) {
     <Dialog open={open}>
     <DialogTrigger asChild>
       <Button onClick={() => setOpen(true)}>
-        + Add Budget
+        + Add
       </Button>
     </DialogTrigger>
     <DialogContent className="sm:max-w-[425px]">
