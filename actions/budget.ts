@@ -60,12 +60,13 @@ export const addBudget = async(values: z.infer<typeof BudgetSchema>, userId: str
 
 
 
-export const updateAmountSpent = async (budgetId:string | null, amount: number) => {
- if (budgetId) {
+export const updateAmountSpent = async (budgetId:string | null, amount: number, userId: string) => {
+ if (userId && budgetId) {
   try {
     const budget = await db.budget.findUnique({
       where: {
           id: new ObjectId(budgetId).toString(),
+          userId: userId
       },
       select: {
           amountSpent: true,
