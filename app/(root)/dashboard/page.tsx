@@ -9,7 +9,7 @@ import { getDashboardData } from '@/actions/dashboard'
 
 const Dashboard = () => {
   const user = useSelector((state: RootState) => state.user.user);
-  const userName:string = user?.user?.name
+  const userName:string = user?.user?.name.split(" ")[0]
   const [ dashboardData, setDashboardData] = useState<any>([])
   const [ loading, setLoading ] = useState<any>(true)
 
@@ -27,6 +27,7 @@ const Dashboard = () => {
 
   if (loading && user?.user?.id) {
     getData();
+
   }
 
   useEffect(() => {
@@ -35,7 +36,7 @@ const Dashboard = () => {
   return (
     <main className="flex flex-col flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0">
       <div className="flex justifiy-center flex-col gap-2 md:gap-2">
-        <h1 className="text-lg font-semibold font-sans md:text-2xl">Hi {userName.split(" ")[0]} 👋</h1>
+        <h1 className="text-lg font-semibold font-sans md:text-2xl">Hi {userName ? userName : "Guest"} 👋</h1>
         <p className="font-sans md:text-md text-gray-600">Heres how your finance health looks like</p>
       </div>
       <div className='flex gap-2 w-full md:flex-row flex-col 2xl:gap-20'>
